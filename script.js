@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const userOptions = document.querySelectorAll('.user-option');
-    
-    // Función para manejar el cambio de selección del tipo de usuario
+    const loginButton = document.querySelector('.login-button');
+    const userInput = document.querySelector('input[type="text"]');
+    const passwordInput = document.querySelector('input[type="password"]');
+
     const handleUserSelector = (event) => {
         userOptions.forEach(option => {
             option.classList.remove('active');
@@ -13,28 +15,38 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedOption.querySelector('.dot').classList.add('active-dot');
     };
 
-    // Agregar el evento de clic a cada opción
     userOptions.forEach(option => {
         option.addEventListener('click', handleUserSelector);
     });
 
-    // Función para simular el inicio de sesión
-    const loginButton = document.querySelector('.login-button');
     loginButton.addEventListener('click', () => {
         const selectedUserType = document.querySelector('.user-option.active').dataset.userType;
-        const usuario = document.querySelector('input[type="text"]').value;
-        const contrasena = document.querySelector('input[type="password"]').value;
+        const user = userInput.value;
+        const password = passwordInput.value;
 
-        // Aquí podrías agregar la lógica real para validar los datos
-        // Por ahora, solo mostraremos los datos en la consola
-        console.log(`Tipo de usuario: ${selectedUserType}`);
-        console.log(`Usuario: ${usuario}`);
-        console.log(`Contraseña: ${contrasena}`);
-
-        if (usuario && contrasena) {
-            alert(`Inicio de sesión simulado como ${selectedUserType}.`);
-            // Aquí podrías redirigir al usuario a otra página
-            // window.location.href = 'dashboard.html';
+        if (user && password) {
+            // Hacemos la llamada al backend simulado
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user, password, userType: selectedUserType }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Inicio de sesión exitoso. Redirigiendo al dashboard...');
+                    // Redirigimos al dashboard.html si el login es exitoso
+                    window.location.href = 'dashboard.html'; 
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error en el login:', error);
+                alert('Ocurrió un error al intentar iniciar sesión.');
+            });
         } else {
             alert('Por favor, ingresa tu usuario y contraseña.');
         }
