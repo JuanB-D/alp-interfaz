@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas de Clase</title>
+    <link rel="stylesheet" href="notes.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <header class="top-bar">
+            <div class="class-selector">
+                <span class="class-name">Notas 10B</span>
+                <div class="subject-tags" id="subjectTags">
+                    </div>
+            </div>
+            <div class="user-info">
+                <span>Jhon Fredy Urquijo</span>
+                <button class="subject-button">Castellano</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="student-list-container">
+                <div class="student-list" id="studentList">
+                    </div>
+            </div>
+
+            <div class="action-panel">
+                <div class="action-card" id="noteFormCard">
+                    <h3>Asignar una nota</h3>
+                    <p>Asignar una nota para un estudiante en especifico.</p>
+                    
+                    <div class="input-group">
+                        <label for="studentName">Estudiante</label>
+                        <input type="text" id="studentName" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="studentNote">Nota</label>
+                        <input type="number" id="studentNote" step="0.1" min="0" max="5">
+                    </div>
+                    
+                    <button class="action-button primary-button" id="assignButton">Asignar</button>
+                    <button class="action-button secondary-button">Cancelar</button>
+                    <button class="action-button tertiary-button">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="notes.js"></script>
+</body>
+</html>
