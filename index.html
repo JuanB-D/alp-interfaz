@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <span class="material-icons user-icon">person</span>
+            <span class="material-icons lock-icon">lock</span>
+        </div>
+        <h1>INGRESAR</h1>
+        <div class="user-selector">
+            <div class="user-option active" data-user-type="estudiante">
+                <div class="dot active-dot"></div>
+                <span>Estudiante</span>
+            </div>
+            <div class="user-option" data-user-type="maestro">
+                <div class="dot"></div>
+                <span>Maestro</span>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="material-icons">person</span>
+            <input type="text" placeholder="Usuario">
+        </div>
+        <div class="input-group">
+            <span class="material-icons">lock</span>
+            <input type="password" placeholder="Contraseña">
+        </div>
+        <button class="login-button">Iniciar sesión</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
