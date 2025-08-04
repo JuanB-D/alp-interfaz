@@ -1,34 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Datos de ejemplo para el estudiante y sus reportes
-    const student = {
-        name: 'Juan Felipe Calle',
-        class: '11A',
-        reports: [
-            { activity: 'Exposición Sobre El Rebelión', note: 3.4 },
-            { activity: 'Taller Sobre El Rebelión', note: 4.0 },
-            { activity: 'Taller Sobre El Rebelión', note: 4.0 },
-            { activity: 'Taller Sobre El Rebelión', note: 4.0 },
-        ]
-    };
-
-    const subjects = [
-        { name: '11A', color: 'purple' },
-        { name: '9A', color: 'green' },
-        { name: '9B', color: 'cyan' },
-    ];
-
     const reportList = document.getElementById('reportList');
     const studentNameReportInput = document.getElementById('studentNameReport');
     const reportTextInput = document.getElementById('reportText');
     const sendReportButton = document.getElementById('sendReportButton');
     const studentNameHeader = document.getElementById('studentNameHeader');
-    const subjectTags = document.getElementById('subjectTags');
 
-    // Actualizar el nombre del estudiante en el encabezado
-    studentNameHeader.textContent = `${student.name} ${student.class}`;
-    studentNameReportInput.value = student.name;
+    // Nombre del estudiante de ejemplo (aquí se obtendría dinámicamente en un caso real)
+    const studentName = "Juan Felipe Calle";
+    const studentClass = "11A";
 
-    // Función para crear las tarjetas de reportes
+    studentNameHeader.textContent = `${studentName} ${studentClass}`;
+    studentNameReportInput.value = studentName;
+    
+    // Hacemos la llamada al backend para obtener los reportes del estudiante
+    fetch(`/api/reports/${encodeURIComponent(studentName)}`)
+        .then(response => response.json())
+        .then(reports => {
+            reports.forEach(report => {
+                reportList.appendChild(createReportCard(report));
+            });
+        })
+        .catch(error => console.error('Error al obtener reportes:', error));
+
     const createReportCard = (reportData) => {
         const card = document.createElement('div');
         card.className = 'report-card';
@@ -39,37 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     };
 
-    // Función para crear los tags de asignaturas (reutilizada de notes.js)
-    const createSubjectTag = (subjectData) => {
-        const tag = document.createElement('span');
-        tag.className = 'subject-tag';
-        tag.setAttribute('data-color', subjectData.color);
-        tag.textContent = subjectData.name;
-        return tag;
-    };
-
-    // Llenar la lista de reportes
-    student.reports.forEach(report => {
-        reportList.appendChild(createReportCard(report));
-    });
-
-    // Llenar los tags de asignaturas
-    subjects.forEach(subject => {
-        subjectTags.appendChild(createSubjectTag(subject));
-    });
-
-    // Lógica para el botón de enviar reporte
     sendReportButton.addEventListener('click', () => {
         const reportText = reportTextInput.value;
-        const studentName = studentNameReportInput.value;
-        
-        if (studentName && reportText) {
-            alert(`Enviando reporte para ${studentName}: "${reportText}"`);
-            // Aquí se enviaría el reporte al servidor
-            console.log({ student: studentName, report: reportText });
-            
-            // Limpiar formulario
-            reportTextInput.value = '';
+        if (reportText) {
+            // Hacemos la llamada al backend para enviar el reporte
+            fetch('/api/reports', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ studentName, reportText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                reportTextInput.value = '';
+            })
+            .catch(error => console.error('Error al enviar el reporte:', error));
         } else {
             alert('Por favor, redacta el reporte antes de enviarlo.');
         }
