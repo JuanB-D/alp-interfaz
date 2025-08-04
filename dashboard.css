@@ -1,0 +1,73 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.dashboard-container {
+    width: 90%;
+    max-width: 600px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.teacher-name {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    color: #555;
+}
+
+.role {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: #888;
+}
+
+.class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    justify-content: center;
+}
+
+.class-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.class-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Colores de las tarjetas */
+.class-card[data-color="blue"] { background: #5a85ff; }
+.class-card[data-color="purple"] { background: #9c66ff; }
+.class-card[data-color="green"] { background: #4caf50; }
+.class-card[data-color="yellow"] { background: #ffc107; }
+.class-card[data-color="orange"] { background: #ff7043; }
+
+/* Otros colores si necesitas más */
+.class-card[data-color="cyan"] { background: #00bcd4; }
+.class-card[data-color="pink"] { background: #e91e63; }
