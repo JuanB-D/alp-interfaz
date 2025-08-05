@@ -1,16 +1,10 @@
 const cors = require('cors');
 const express = require('express');
 const app = express();
+const { studentsDB } = require('./data'); // Importamos la base de datos
 
 app.use(cors());
 app.use(express.json());
-
-const studentsDB = {
-    'Juan Felipe Calle': { notes: [2.9], reports: [] },
-    'Emmanuel Valles Gómez': { notes: [2.9], reports: [] },
-    'Keiner Maturana': { notes: [2.9], reports: [] },
-    'Wendy Daniela Ortiz': { notes: [2.9], reports: [] },
-};
 
 module.exports = (request, response) => {
     const { studentName, note, className } = request.body;
@@ -20,6 +14,7 @@ module.exports = (request, response) => {
         
         const total = studentsDB[studentName].notes.reduce((sum, current) => sum + current, 0);
         const newAverage = (total / studentsDB[studentName].notes.length).toFixed(1);
+        studentsDB[studentName].average = parseFloat(newAverage); // Actualizamos el promedio en la "base de datos"
         
         console.log(`Asignando nota: ${note} a ${studentName}. Nuevo promedio: ${newAverage}`);
         
