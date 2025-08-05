@@ -36,9 +36,21 @@ body {
 
 .class-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     justify-content: center;
+}
+
+.class-card-container {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.class-card-container:hover {
+    transform: translateY(-5px);
 }
 
 .class-card {
@@ -46,19 +58,13 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    height: 100px;
     padding: 20px;
-    border-radius: 15px;
     color: #fff;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-.class-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: default;
 }
 
 /* Colores de las tarjetas */
@@ -67,7 +73,28 @@ body {
 .class-card[data-color="green"] { background: #4caf50; }
 .class-card[data-color="yellow"] { background: #ffc107; }
 .class-card[data-color="orange"] { background: #ff7043; }
-
-/* Otros colores si necesitas más */
 .class-card[data-color="cyan"] { background: #00bcd4; }
 .class-card[data-color="pink"] { background: #e91e63; }
+
+.class-options {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+.option-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.option-link:hover {
+    color: #007bff;
+}
