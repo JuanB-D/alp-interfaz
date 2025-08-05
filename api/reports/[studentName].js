@@ -1,9 +1,4 @@
-const studentsDB = {
-    'Juan Felipe Calle': { notes: [2.9], reports: [{ title: 'Reporte Inicial', text: 'Excelente participación en clase.' }] },
-    'Emmanuel Valles Gómez': { notes: [2.9], reports: [] },
-    'Keiner Maturana': { notes: [2.9], reports: [] },
-    'Wendy Daniela Ortiz': { notes: [2.9], reports: [] },
-};
+const { studentsDB } = require('../data'); // Importamos la base de datos
 
 module.exports = (request, response) => {
     const { studentName } = request.query;
@@ -12,7 +7,7 @@ module.exports = (request, response) => {
     const student = studentsDB[studentName];
     
     if (student) {
-        response.status(200).json(student.reports);
+        response.status(200).json(student.reports); // Devolvemos los reportes del objeto central
     } else {
         response.status(404).json([]);
     }
