@@ -1,13 +1,14 @@
-const { studentsDB } = require('../data'); // Importamos la base de datos de estudiantes
+const { studentsDB } = require('../data');
 
-module.exports = (request, response) => {
+module.exports = async (request, response) => {
     const { classId } = request.query;
     console.log(`Obteniendo estudiantes para la clase: ${classId}`);
     
-    // Convertimos el objeto de estudiantes a un array para la respuesta
+    // Devolvemos el array completo del estudiante, incluyendo el nombre, promedio y notas
     const students = Object.values(studentsDB).map(student => ({
         name: student.name,
-        average: student.average
+        average: student.average,
+        notes: student.notes
     }));
 
     response.status(200).json(students);
