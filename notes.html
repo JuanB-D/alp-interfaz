@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notas de Clase</title>
+    <title>Notas - IE</title>
     <link rel="stylesheet" href="notes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="page-container">
-        <header class="top-bar">
+        <div class="top-bar">
             <div class="class-selector">
-                <span class="class-name">Notas 10B</span>
-                <div class="subject-tags" id="subjectTags">
-                    </div>
+                <h1 class="class-name">Notas</h1>
             </div>
             <div class="user-info">
                 <span>Jhon Fredy Urquijo</span>
-                <button class="subject-button">Castellano</button>
+                <span class="material-icons">account_circle</span>
             </div>
-        </header>
+        </div>
 
         <div class="main-content">
             <div class="student-list-container">
@@ -28,28 +27,36 @@
             </div>
 
             <div class="action-panel">
-                <div class="action-card" id="noteFormCard">
-                    <h3>Asignar una nota</h3>
-                    <p>Asignar una nota para un estudiante en especifico.</p>
-                    
-                    <div class="input-group">
-                        <label for="studentName">Estudiante</label>
-                        <input type="text" id="studentName" readonly>
+                <div class="student-notes-view" id="studentNotesView" style="display: none;">
+                    <h3>Notas de <span id="selectedStudentNotesName"></span></h3>
+                    <div class="notes-list" id="notesList">
+                        </div>
+                </div>
+
+                <div class="assign-note-view" id="assignNoteView">
+                    <div class="action-card">
+                        <h3>Asignar una nota</h3>
+                        <p>Asignar una nota para un estudiante en específico.</p>
+                        <div class="input-group">
+                            <label for="studentName">Estudiante</label>
+                            <input type="text" id="studentName" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label for="studentNote">Nota</label>
+                            <input type="number" id="studentNote">
+                        </div>
+                        <button class="action-button primary-button" id="assignButton">Asignar</button>
+                        <button class="action-button secondary-button">Cancelar</button>
                     </div>
-                    
-                    <div class="input-group">
-                        <label for="studentNote">Nota</label>
-                        <input type="number" id="studentNote" step="0.1" min="0" max="5">
-                    </div>
-                    
-                    <button class="action-button primary-button" id="assignButton">Asignar</button>
-                    <button class="action-button secondary-button">Cancelar</button>
-                    <button class="action-button tertiary-button">Editar</button>
                 </div>
             </div>
         </div>
     </div>
     
+    <footer>
+        <p>Creado con corazón por Emmanuel Valles.</p>
+    </footer>
+
     <script src="notes.js"></script>
 </body>
 </html>
