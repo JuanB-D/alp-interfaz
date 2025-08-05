@@ -2,7 +2,7 @@ const initialStudents = {
     'Juan Felipe Calle': {
         name: 'Juan Felipe Calle',
         average: 3.5,
-        notes: [3.5],
+        notes: [3.0, 4.0, 3.5],
         reports: [{ title: 'Reporte Inicial', text: 'Excelente participación en clase.' }]
     },
     'Emmanuel Valles Gómez': {
