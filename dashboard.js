@@ -2,13 +2,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const classGrid = document.getElementById('classGrid');
 
     const createClassCard = (classData) => {
-        const card = document.createElement('a');
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'class-card-container';
+        
+        const card = document.createElement('div');
         card.className = 'class-card';
-        card.href = `notes.html?class=${encodeURIComponent(classData.name)}`;
         card.setAttribute('data-color', classData.color);
         card.textContent = classData.name;
+
+        const options = document.createElement('div');
+        options.className = 'class-options';
+
+        const notesLink = document.createElement('a');
+        notesLink.className = 'option-link';
+        notesLink.href = `notes.html?class=${encodeURIComponent(classData.name)}`;
+        notesLink.innerHTML = `<span class="material-icons">description</span> Notas`;
+
+        const attendanceLink = document.createElement('a');
+        attendanceLink.className = 'option-link';
+        attendanceLink.href = `attendance.html?class=${encodeURIComponent(classData.name)}`;
+        attendanceLink.innerHTML = `<span class="material-icons">fact_check</span> Asistencia`;
+
+        options.appendChild(notesLink);
+        options.appendChild(attendanceLink);
+
+        cardContainer.appendChild(card);
+        cardContainer.appendChild(options);
         
-        return card;
+        return cardContainer;
     };
 
     // Hacemos la llamada al backend para obtener las clases
