@@ -1,11 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const students = [
-        { name: 'Juan Felipe Calle' },
-        { name: 'Emmanuel Valles Gómez' },
-        { name: 'Keiner Maturana' },
-        { name: 'Wendy Daniela Ortiz' },
-    ];
+    const classTitle = document.querySelector('.class-title');
     const studentAttendanceList = document.getElementById('studentAttendanceList');
+    const dateSelector = document.getElementById('dateSelector');
+    
+    // Obtenemos el nombre de la clase de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const className = urlParams.get('class');
+
+    if (className) {
+        classTitle.textContent = `Estudiantes ${className}`;
+        
+        // Hacemos la llamada al backend para obtener los estudiantes de la clase
+        fetch(`/api/students/${className}`)
+            .then(response => response.json())
+            .then(students => {
+                students.forEach(student => {
+                    studentAttendanceList.appendChild(createStudentAttendanceCard(student.name));
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener estudiantes:', error);
+                studentAttendanceList.textContent = 'No se pudieron cargar los estudiantes para este grupo.';
+            });
+    } else {
+        classTitle.textContent = 'Selecciona un grupo desde el Dashboard';
+        studentAttendanceList.textContent = 'Por favor, regresa al dashboard y selecciona una clase para ver la asistencia.';
+    }
 
     const createStudentAttendanceCard = (studentName) => {
         const card = document.createElement('div');
@@ -32,10 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     };
 
-    students.forEach(student => {
-        studentAttendanceList.appendChild(createStudentAttendanceCard(student.name));
-    });
-
     studentAttendanceList.addEventListener('change', (event) => {
         const radio = event.target;
         if (radio.type === 'radio') {
@@ -43,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const status = radio.value;
             const date = new Date().toISOString().slice(0, 10);
             
-            // Hacemos la llamada al backend para registrar la asistencia
             fetch('/api/attendance', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -57,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Código para generar fechas (no necesita cambios)
-    const dateSelector = document.getElementById('dateSelector');
     const generateDates = () => {
         const today = new Date();
         const daysToShow = 6;
