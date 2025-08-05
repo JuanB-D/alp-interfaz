@@ -9,10 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedStudentNotesName = document.getElementById('selectedStudentNotesName');
     const notesList = document.getElementById('notesList');
     const assignNoteView = document.getElementById('assignNoteView');
-
+    const assignNoteButton = document.getElementById('showAssignNoteButton'); // Nuevo botón
+    
+    // Obtener el nombre del estudiante de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const className = urlParams.get('class');
 
+    // Cargar los estudiantes de la clase
     if (className) {
         classNameHeader.textContent = `Notas ${className}`;
 
@@ -37,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         studentList.textContent = 'Por favor, selecciona una clase del dashboard para ver las notas.';
     }
 
+    // Función para crear las tarjetas de los estudiantes
     const createStudentCard = (studentData) => {
         const card = document.createElement('div');
         card.className = 'student-card';
@@ -53,19 +57,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const studentActions = card.querySelector('.student-actions');
         
+        // Manejar el clic en la tarjeta del estudiante
         card.addEventListener('click', () => {
+            // Eliminar la selección de todas las tarjetas
             document.querySelectorAll('.student-card').forEach(s => {
                 s.classList.remove('selected');
                 s.querySelector('.student-actions').style.display = 'none';
             });
             
+            // Seleccionar la tarjeta actual
             card.classList.add('selected');
             studentActions.style.display = 'flex';
             
-            // Ocultar la vista de notas y mostrar la de asignar por defecto
-            studentNotesView.style.display = 'none';
-            assignNoteView.style.display = 'block';
-
+            // Mostrar la vista de notas y renderizar las notas del estudiante
+            studentNotesView.style.display = 'block';
+            assignNoteView.style.display = 'none';
+            selectedStudentNotesName.textContent = studentData.name;
+            renderNotes(studentData.notes);
+            
+            // Establecer el nombre del estudiante en el formulario para asignar notas
             studentNameInput.value = studentData.name;
         });
 
@@ -77,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.querySelector('.notes-btn').addEventListener('click', (evento) => {
             evento.stopPropagation();
             
-            // Ocultar la vista de asignar notas y mostrar la de ver notas
             assignNoteView.style.display = 'none';
             studentNotesView.style.display = 'block';
             
@@ -88,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     };
 
+    // Función para renderizar la lista de notas
     const renderNotes = (notes) => {
         notesList.innerHTML = '';
         if (notes && notes.length > 0) {
@@ -102,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
+    // Asignar nota
     assignButton.addEventListener('click', () => {
         const studentName = studentNameInput.value;
         const note = parseFloat(studentNoteInput.value);
@@ -122,14 +133,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 studentNoteInput.value = '';
+                // Limpiamos la selección
                 document.querySelectorAll('.student-card').forEach(s => {
                     s.classList.remove('selected');
                     s.querySelector('.student-actions').style.display = 'none';
                 });
+                
+                // Recargamos la página para obtener las notas actualizadas
+                window.location.reload(); 
             })
             .catch(error => console.error('Error al asignar la nota:', error));
         } else {
             alert('Por favor, selecciona un estudiante y asigna una nota válida.');
         }
     });
+
+    // Inicialmente, ocultar las vistas detalladas
+    studentNotesView.style.display = 'none';
+    assignNoteView.style.display = 'none';
 });
