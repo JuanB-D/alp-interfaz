@@ -1,16 +1,10 @@
 const cors = require('cors');
 const express = require('express');
 const app = express();
+const { studentsDB } = require('./data'); // Importamos la base de datos
 
 app.use(cors());
 app.use(express.json());
-
-const studentsDB = {
-    'Juan Felipe Calle': { notes: [2.9], reports: [] },
-    'Emmanuel Valles Gómez': { notes: [2.9], reports: [] },
-    'Keiner Maturana': { notes: [2.9], reports: [] },
-    'Wendy Daniela Ortiz': { notes: [2.9], reports: [] },
-};
 
 module.exports = (request, response) => {
     const { studentName, reportText } = request.body;
@@ -21,7 +15,7 @@ module.exports = (request, response) => {
             text: reportText,
             date: new Date().toISOString()
         };
-        studentsDB[studentName].reports.push(newReport);
+        studentsDB[studentName].reports.push(newReport); // Agregamos el reporte al objeto central
         
         console.log(`Enviando reporte para ${studentName}: ${reportText}`);
         response.status(200).json({ success: true, message: `Reporte enviado para ${studentName}` });
