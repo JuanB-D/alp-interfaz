@@ -1,12 +1,19 @@
-// api/reports/[studentName].js
-module.exports = (req, res) => {
-    const { studentName } = req.query;
+const studentsDB = {
+    'Juan Felipe Calle': { notes: [2.9], reports: [{ title: 'Reporte Inicial', text: 'Excelente participación en clase.' }] },
+    'Emmanuel Valles Gómez': { notes: [2.9], reports: [] },
+    'Keiner Maturana': { notes: [2.9], reports: [] },
+    'Wendy Daniela Ortiz': { notes: [2.9], reports: [] },
+};
+
+module.exports = (request, response) => {
+    const { studentName } = request.query;
     console.log(`Obteniendo reportes para: ${studentName}`);
     
-    const studentReports = [
-        { activity: 'Exposición Sobre El Rebelión', note: 3.4 },
-        { activity: 'Taller Sobre El Rebelión', note: 4.0 },
-        { activity: 'Taller Sobre El Rebelión', note: 4.0 },
-    ];
-    res.status(200).json(studentReports);
+    const student = studentsDB[studentName];
+    
+    if (student) {
+        response.status(200).json(student.reports);
+    } else {
+        response.status(404).json([]);
+    }
 };
