@@ -94,6 +94,35 @@ body {
     flex: 1;
 }
 
+    /* Estilos para el botón de eliminar */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.report-header h4 {
+    margin: 0;
+}
+
+.delete-report-button {
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.delete-report-button:hover {
+    color: #d32f2f;
+}
+
+.delete-report-button .material-icons {
+    font-size: 20px;
+}
+
 /* Nuevos estilos para los reportes */
 .report-card {
     display: flex;
@@ -192,32 +221,4 @@ body {
         width: 100%;
     }
 
-    /* Estilos para el botón de eliminar */
-.report-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.report-header h4 {
-    margin: 0;
-}
-
-.delete-report-button {
-    background: none;
-    border: none;
-    color: #f44336;
-    cursor: pointer;
-    padding: 5px;
-    transition: color 0.2s;
-}
-
-.delete-report-button:hover {
-    color: #d32f2f;
-}
-
-.delete-report-button .material-icons {
-    font-size: 20px;
-}
 }
