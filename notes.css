@@ -54,6 +54,9 @@ body {
 
 .subject-tag[data-color="purple"] { background: #9c66ff; }
 .subject-tag[data-color="green"] { background: #4caf50; }
+.subject-tag[data-color="cyan"] { background: #00bcd4; }
+.subject-tag[data-color="yellow"] { background: #ffc107; }
+.subject-tag[data-color="orange"] { background: #ff7043; }
 
 .user-info {
     display: flex;
@@ -179,7 +182,47 @@ body {
     color: #333;
 }
 
-/* Responsividad para móviles */
+.student-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.report-btn {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.report-btn:hover {
+    background-color: #d32f2f;
+}
+
+.notes-btn {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.notes-btn:hover {
+    background-color: #388e3c;
+}
+
+.student-card .student-actions {
+    display: none;
+}
+
+.student-card.selected .student-actions {
+    display: flex;
+}
+
 @media (max-width: 768px) {
     .top-bar {
         flex-direction: column;
