@@ -12,17 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
         studentNameHeader.textContent = `Reportes de ${studentName}`;
         studentNameReportInput.value = studentName;
         
-        // Función para cargar los reportes
         const loadReports = () => {
-            // Hacemos la llamada al backend para obtener los reportes del estudiante
-            // Ahora la petición GET también va a /api/reports
             fetch(`/api/reports?studentName=${encodeURIComponent(studentName)}`)
                 .then(response => response.json())
                 .then(reports => {
-                    reportList.innerHTML = ''; // Limpiamos la lista antes de volver a renderizar
+                    reportList.innerHTML = '';
                     if (reports && reports.length > 0) {
-                        reports.forEach(report => {
-                            reportList.appendChild(createReportCard(report));
+                        reports.forEach((report, index) => {
+                            reportList.appendChild(createReportCard(report, index));
                         });
                     } else {
                         reportList.innerHTML = '<p>No se encontraron reportes para este estudiante.</p>';
@@ -31,23 +28,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(error => console.error('Error al obtener reportes:', error));
         };
 
-        // Cargamos los reportes al iniciar la página
-        loadReports();
-
-        const createReportCard = (reportData) => {
+        const createReportCard = (reportData, index) => {
             const card = document.createElement('div');
             card.className = 'report-card';
             card.innerHTML = `
-                <h4>${reportData.title}</h4>
+                <div class="report-header">
+                    <h4>${reportData.title}</h4>
+                    <button class="delete-report-button" data-index="${index}"><span class="material-icons">delete_forever</span></button>
+                </div>
                 <p>${reportData.text}</p>
             `;
+
+            // Agregar evento de clic al botón de eliminar
+            card.querySelector('.delete-report-button').addEventListener('click', () => {
+                deleteReport(studentName, index);
+            });
+
             return card;
+        };
+
+        const deleteReport = (student, reportIndex) => {
+            if (confirm('¿Estás seguro de que quieres eliminar este reporte?')) {
+                fetch('/api/reports', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ studentName: student, reportIndex: reportIndex }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    loadReports(); // Volvemos a cargar los reportes para actualizar la lista
+                })
+                .catch(error => console.error('Error al eliminar el reporte:', error));
+            }
         };
 
         sendReportButton.addEventListener('click', () => {
             const reportText = reportTextInput.value;
             if (studentName && reportText) {
-                // Hacemos la llamada POST para enviar el reporte
                 fetch('/api/reports', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -57,13 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     alert(data.message);
                     reportTextInput.value = '';
-                    loadReports(); // Volvemos a cargar los reportes después de enviar uno nuevo
+                    loadReports();
                 })
                 .catch(error => console.error('Error al enviar el reporte:', error));
             } else {
                 alert('Por favor, redacta el reporte antes de enviarlo.');
             }
         });
+
+        loadReports();
     } else {
         studentNameHeader.textContent = 'Reportes';
         reportList.innerHTML = '<p>Por favor, selecciona un estudiante para ver sus reportes.</p>';
