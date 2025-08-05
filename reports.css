@@ -1,3 +1,4 @@
+/* Copia y pega aquí todo el contenido de notes.css */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #f0f2f5;
@@ -55,8 +56,6 @@ body {
 .subject-tag[data-color="purple"] { background: #9c66ff; }
 .subject-tag[data-color="green"] { background: #4caf50; }
 .subject-tag[data-color="cyan"] { background: #00bcd4; }
-.subject-tag[data-color="yellow"] { background: #ffc107; }
-.subject-tag[data-color="orange"] { background: #ff7043; }
 
 .user-info {
     display: flex;
@@ -79,7 +78,7 @@ body {
     gap: 20px;
 }
 
-.student-list-container, .action-panel {
+.report-list-container, .action-panel {
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -87,7 +86,7 @@ body {
     box-sizing: border-box;
 }
 
-.student-list-container {
+.report-list-container {
     flex: 2;
 }
 
@@ -95,33 +94,29 @@ body {
     flex: 1;
 }
 
-.student-card {
+/* Nuevos estilos para los reportes */
+.report-card {
     display: flex;
     flex-direction: column;
     padding: 15px;
     border-radius: 10px;
     background-color: #f9f9f9;
     margin-bottom: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s;
 }
 
-.student-card:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-}
-
-.student-card h4 {
-    margin: 0;
+.report-card h4 {
+    margin: 0 0 5px 0;
     font-size: 16px;
 }
 
-.student-card p {
-    margin: 5px 0 0 0;
+.report-card p {
+    margin: 0;
     font-size: 14px;
-    color: #888;
+    color: #555;
 }
 
+/* Estilos para el formulario */
 .action-card {
     padding: 20px;
     background-color: #f9f9f9;
@@ -149,12 +144,13 @@ body {
     margin-bottom: 5px;
 }
 
-.input-group input {
+.input-group input, .input-group textarea {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ddd;
     box-sizing: border-box;
+    font-family: inherit; /* Importante para que el textarea use la misma fuente */
 }
 
 .action-button {
@@ -182,47 +178,6 @@ body {
     color: #333;
 }
 
-.student-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.action-btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.report-btn {
-    background-color: #f44336;
-    color: #fff;
-}
-
-.report-btn:hover {
-    background-color: #d32f2f;
-}
-
-.notes-btn {
-    background-color: #4caf50;
-    color: #fff;
-}
-
-.notes-btn:hover {
-    background-color: #388e3c;
-}
-
-.student-card .student-actions {
-    display: none;
-}
-
-.student-card.selected .student-actions {
-    display: flex;
-}
-
 @media (max-width: 768px) {
     .top-bar {
         flex-direction: column;
@@ -232,7 +187,7 @@ body {
     .main-content {
         flex-direction: column;
     }
-    .student-list-container, .action-panel {
+    .report-list-container, .action-panel {
         flex: 1;
         width: 100%;
     }
