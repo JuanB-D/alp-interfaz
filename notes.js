@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const assignButton = document.getElementById('assignButton');
     const classNameHeader = document.querySelector('.class-name');
 
+    const studentNotesView = document.getElementById('studentNotesView');
+    const selectedStudentNotesName = document.getElementById('selectedStudentNotesName');
+    const notesList = document.getElementById('notesList');
+    const assignNoteView = document.getElementById('assignNoteView');
+
     const urlParams = new URLSearchParams(window.location.search);
     const className = urlParams.get('class');
 
@@ -41,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Promedio: <span id="average-${studentData.name.replace(/\s/g, '-')}">${studentData.average}</span></p>
             </div>
             <div class="student-actions" style="display: none;">
-                <button class="action-btn report-btn">Reportes</button>
                 <button class="action-btn notes-btn">Notas</button>
+                <button class="action-btn report-btn">Reportes</button>
             </div>
         `;
 
@@ -57,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.add('selected');
             studentActions.style.display = 'flex';
             
+            // Ocultar la vista de notas y mostrar la de asignar por defecto
+            studentNotesView.style.display = 'none';
+            assignNoteView.style.display = 'block';
+
             studentNameInput.value = studentData.name;
         });
 
@@ -67,10 +76,30 @@ document.addEventListener('DOMContentLoaded', () => {
         
         card.querySelector('.notes-btn').addEventListener('click', (evento) => {
             evento.stopPropagation();
-            // Lógica para el botón de notas...
+            
+            // Ocultar la vista de asignar notas y mostrar la de ver notas
+            assignNoteView.style.display = 'none';
+            studentNotesView.style.display = 'block';
+            
+            selectedStudentNotesName.textContent = studentData.name;
+            renderNotes(studentData.notes);
         });
 
         return card;
+    };
+
+    const renderNotes = (notes) => {
+        notesList.innerHTML = '';
+        if (notes && notes.length > 0) {
+            notes.forEach(note => {
+                const noteCard = document.createElement('div');
+                noteCard.className = 'note-card';
+                noteCard.textContent = `Nota: ${note}`;
+                notesList.appendChild(noteCard);
+            });
+        } else {
+            notesList.innerHTML = '<p>No hay notas asignadas para este estudiante.</p>';
+        }
     };
     
     assignButton.addEventListener('click', () => {
@@ -92,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     averageSpan.textContent = data.newAverage;
                 }
                 
-                studentNameInput.value = '';
                 studentNoteInput.value = '';
                 document.querySelectorAll('.student-card').forEach(s => {
                     s.classList.remove('selected');
