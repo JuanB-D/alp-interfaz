@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "electron": "^37.2.6"
+  },
+  "name": "alp-interfaz",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImMatthewDev/alp-interfaz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ImMatthewDev/alp-interfaz/issues"
+  },
+  "homepage": "https://github.com/ImMatthewDev/alp-interfaz#readme",
+  "description": ""
+}

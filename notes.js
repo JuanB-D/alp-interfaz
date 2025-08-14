@@ -1,154 +1,124 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const studentList = document.getElementById('studentList');
-    const studentNameInput = document.getElementById('studentName');
-    const studentNoteInput = document.getElementById('studentNote');
-    const assignButton = document.getElementById('assignButton');
-    const classNameHeader = document.querySelector('.class-name');
+const studentList = document.querySelector('.student-list');
+const userData = JSON.parse(localStorage.getItem('teacher-data'));
+const teacherName = document.querySelector('.teacher-name');
+teacherName.textContent = userData.name
 
-    const studentNotesView = document.getElementById('studentNotesView');
-    const selectedStudentNotesName = document.getElementById('selectedStudentNotesName');
-    const notesList = document.getElementById('notesList');
-    const assignNoteView = document.getElementById('assignNoteView');
-    const assignNoteButton = document.getElementById('showAssignNoteButton'); // Nuevo botón
-    
-    // Obtener el nombre del estudiante de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const className = urlParams.get('class');
+function getGradeColor(grade) {
+    if (grade >= 1.0 && grade <= 2.9) return 'red';       // malo
+    if (grade >= 3.0 && grade <= 3.9) return 'orange';    // regular
+    if (grade >= 4.0 && grade <= 5.0) return 'green';     // bueno
+    return '';
+}
 
-    // Cargar los estudiantes de la clase
-    if (className) {
-        classNameHeader.textContent = `Notas ${className}`;
+function createGradeCell(content, isLoading = false) {
+    const td = document.createElement('td');
 
-        fetch(`/api/students/${className}`)
-            .then(response => response.json())
-            .then(students => {
-                if (students && students.length > 0) {
-                    students.forEach(student => {
-                        const card = createStudentCard(student);
-                        studentList.appendChild(card);
-                    });
-                } else {
-                    studentList.innerHTML = '<p>No se encontraron estudiantes para esta clase.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error al obtener estudiantes:', error);
-                studentList.textContent = 'Ocurrió un error al cargar los estudiantes.';
-            });
-    } else {
-        classNameHeader.textContent = 'Notas';
-        studentList.textContent = 'Por favor, selecciona una clase del dashboard para ver las notas.';
+    if (isLoading) {
+        td.textContent = 'Cargando...';
+        td.style.fontStyle = 'italic';
+        return td;
     }
 
-    // Función para crear las tarjetas de los estudiantes
-    const createStudentCard = (studentData) => {
-        const card = document.createElement('div');
-        card.className = 'student-card';
-        card.innerHTML = `
-            <div>
-                <h4>${studentData.name}</h4>
-                <p>Promedio: <span id="average-${studentData.name.replace(/\s/g, '-')}">${studentData.average}</span></p>
-            </div>
-            <div class="student-actions" style="display: none;">
-                <button class="action-btn notes-btn">Notas</button>
-                <button class="action-btn report-btn">Reportes</button>
-            </div>
-        `;
+    if (content === null || content === undefined || content === 'vacío') {
+        td.textContent = '--';
+        return td;
+    }
 
-        const studentActions = card.querySelector('.student-actions');
-        
-        // Manejar el clic en la tarjeta del estudiante
-        card.addEventListener('click', () => {
-            // Eliminar la selección de todas las tarjetas
-            document.querySelectorAll('.student-card').forEach(s => {
-                s.classList.remove('selected');
-                s.querySelector('.student-actions').style.display = 'none';
-            });
-            
-            // Seleccionar la tarjeta actual
-            card.classList.add('selected');
-            studentActions.style.display = 'flex';
-            
-            // Mostrar la vista de notas y renderizar las notas del estudiante
-            studentNotesView.style.display = 'block';
-            assignNoteView.style.display = 'none';
-            selectedStudentNotesName.textContent = studentData.name;
-            renderNotes(studentData.notes);
-            
-            // Establecer el nombre del estudiante en el formulario para asignar notas
-            studentNameInput.value = studentData.name;
-        });
+    const rounded = Math.round(content * 10) / 10; // redondeo a 1 decimal
+    td.textContent = rounded;
+    td.style.color = getGradeColor(rounded); // solo cambia el color del texto
+    td.style.fontWeight = 'bold';
+    return td;
+}
 
-        card.querySelector('.report-btn').addEventListener('click', (evento) => {
-            evento.stopPropagation();
-            window.location.href = `reports.html?student=${encodeURIComponent(studentData.name)}`;
-        });
-        
-        card.querySelector('.notes-btn').addEventListener('click', (evento) => {
-            evento.stopPropagation();
-            
-            assignNoteView.style.display = 'none';
-            studentNotesView.style.display = 'block';
-            
-            selectedStudentNotesName.textContent = studentData.name;
-            renderNotes(studentData.notes);
-        });
-
-        return card;
-    };
-
-    // Función para renderizar la lista de notas
-    const renderNotes = (notes) => {
-        notesList.innerHTML = '';
-        if (notes && notes.length > 0) {
-            notes.forEach(note => {
-                const noteCard = document.createElement('div');
-                noteCard.className = 'note-card';
-                noteCard.textContent = `Nota: ${note}`;
-                notesList.appendChild(noteCard);
-            });
-        } else {
-            notesList.innerHTML = '<p>No hay notas asignadas para este estudiante.</p>';
-        }
-    };
-    
-    // Asignar nota
-    assignButton.addEventListener('click', () => {
-        const studentName = studentNameInput.value;
-        const note = parseFloat(studentNoteInput.value);
-        
-        if (studentName && !isNaN(note)) {
-            fetch('/api/notes', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ studentName: studentName, note: note, className: className }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                
-                const averageSpan = document.getElementById(`average-${studentName.replace(/\s/g, '-')}`);
-                if (averageSpan) {
-                    averageSpan.textContent = data.newAverage;
-                }
-                
-                studentNoteInput.value = '';
-                // Limpiamos la selección
-                document.querySelectorAll('.student-card').forEach(s => {
-                    s.classList.remove('selected');
-                    s.querySelector('.student-actions').style.display = 'none';
-                });
-                
-                // Recargamos la página para obtener las notas actualizadas
-                window.location.reload(); 
-            })
-            .catch(error => console.error('Error al asignar la nota:', error));
-        } else {
-            alert('Por favor, selecciona un estudiante y asigna una nota válida.');
-        }
+async function getGrades(student_id) {
+    const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/data/grades?student_id=${student_id}`, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${userData.token}` }
     });
+    return await response.json();
+}
 
-    // Inicialmente, ocultar las vistas detalladas
-    studentNotesView.style.display = 'none';
-    assignNoteView.style.display = 'none';
-});
+async function renderStudents() {
+    try {
+        const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/data/groupstudents?grupo_id=${localStorage.getItem('group')}`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${userData.token}` }
+        });
+        const responseData = await response.json();
+
+        // Crear la tabla
+        const table = document.createElement('table');
+        table.border = '1';
+        table.style.borderCollapse = 'collapse';
+        table.style.width = '100%';
+
+        // Crear encabezado
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
+            <tr>
+                <th>Nombre</th>
+                <th>CS</th>
+                <th>Esp</th>
+                <th>Mat</th>
+                <th>Soc</th>
+                <th>Nat</th>
+                <th>Ing</th>
+                <th>Rel</th>
+                <th>EyV</th>
+                <th>Art</th>
+                <th>EF</th>
+                <th>Emp</th>
+                <th>Inf</th>
+                <th>Promedio</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+
+        // Crear cuerpo de la tabla
+        const tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+
+        // Pintar estudiantes primero con "Cargando..."
+        responseData.data.forEach(student => {
+            const row = document.createElement('tr');
+            row.appendChild(document.createElement('td')).textContent = student.name || '___';
+
+            // Materias con estado de carga
+            ['CS', 'Esp', 'Mat', 'Soc', 'Nat', 'Ing', 'Rel', 'EyV', 'Art', 'EF', 'Emp', 'Inf', 'promedio']
+                .forEach(() => row.appendChild(createGradeCell(null, true)));
+
+            tbody.appendChild(row);
+
+            // Luego pedir notas y actualizar fila
+            getGrades(student.id).then(gradesData => {
+                const grades = {};
+                gradesData.data.forEach(g => {
+                    grades[g.subject] = g.grade;
+                });
+
+                // Reemplazar celdas por notas reales
+                const cells = row.querySelectorAll('td');
+                let i = 1; // empieza en 1 porque la primera es el nombre
+                ['CS', 'Esp', 'Mat', 'Soc', 'Nat', 'Ing', 'Rel', 'EyV', 'Art', 'EF', 'Emp', 'Inf'].forEach(subject => {
+                    cells[i].replaceWith(createGradeCell(grades[subject]));
+                    i++;
+                });
+
+                // Promedio
+                const allGrades = Object.values(grades).filter(g => typeof g === 'number');
+                const avg = allGrades.length > 0 ? allGrades.reduce((a, b) => a + b, 0) / allGrades.length : null;
+                cells[i].replaceWith(createGradeCell(avg));
+            });
+        });
+
+        // Insertar la tabla en el contenedor
+        studentList.innerHTML = '';
+        studentList.appendChild(table);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+renderStudents();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,40 +9,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
     <div class="login-wrapper">
-        <div class="login-container">
+        <form class="login-container">
             <div class="logo">
                 <span class="material-icons user-icon">person</span>
                 <span class="material-icons lock-icon">lock</span>
             </div>
             <h1>INGRESAR</h1>
-            <div class="user-selector">
-                <div class="user-option active" data-user-type="estudiante">
-                    <span>Estudiante</span>
-                    <div class="dot active-dot"></div>
-                </div>
-                <div class="user-option" data-user-type="maestro">
-                    <span>Maestro</span>
-                    <div class="dot"></div>
-                </div>
-            </div>
             <div class="input-group">
                 <span class="material-icons">person</span>
-                <input type="text" placeholder="Usuario">
+                <input type="text" placeholder="Usuario" name="name">
             </div>
             <div class="input-group">
                 <span class="material-icons">lock</span>
-                <input type="password" placeholder="Contraseña">
+                <div class="inp">
+                    <input type="password" placeholder="Contraseña" name="password">
+                    <p class="response-message"></p>
+                </div>
             </div>
             <button class="login-button">Iniciar sesión</button>
-        </div>
+        </form>
     </div>
-    
+
     <footer>
-        <p>Creado con ♥️ por Emmanuel Valles.</p>
+        <p>Creado con ♥️ por Emmanuel Valles <br> & Felipe Calle 😎.</p>
     </footer>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>

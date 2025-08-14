@@ -267,3 +267,10 @@ body {
         width: 100%;
     }
 }
+.student-list{
+    min-height: 50vh;
+}
+
+table td, table th{
+    text-align: center;
+}
