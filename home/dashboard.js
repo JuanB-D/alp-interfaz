@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const classGrid = document.getElementById("classGrid");
   const teacherName = document.querySelector(".teacher-name");
-
+  
   try {
     const teacherData = JSON.parse(localStorage.getItem("teacher-data"));
     teacherName.textContent = teacherData?.name || "Profesor desconocido";
@@ -35,11 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const notesLink = document.createElement("a");
     notesLink.className = "option-link";
     notesLink.innerHTML = `<span class="material-icons">description</span> Notas`;
-    notesLink.addEventListener('click', () => {localStorage.setItem('group', classData.id); window.location.href = './notes.html'})
+    notesLink.addEventListener('click', () => {localStorage.setItem('group', classData.id); window.location.href = '../notes/notes.html'})
 
     const attendanceLink = document.createElement("a");
     attendanceLink.className = "option-link";
-    attendanceLink.innerHTML = `<span class="material-icons">fact_check</span> Asistencia`;
+    attendanceLink.innerHTML = `<span class="material-icons">fact_check</span> Análisis`;
+    attendanceLink.addEventListener('click', () => window.location.href = '../analisis/index.html')
 
     options.appendChild(notesLink);
     options.appendChild(attendanceLink);
@@ -57,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     );
     const classes = await response.json();
+    localStorage.setItem('groupslength', classes.data.length)
 
     classes.data.forEach(classData => {
       classData.color = getRandomColor(); // Asignar color oscuro

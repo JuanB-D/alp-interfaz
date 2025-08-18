@@ -6,6 +6,34 @@ const Superior = [];
 const Alto = [];
 const Basico = [];
 const Bajo = [];
+document.addEventListener('DOMContentLoaded', () =>{
+  function downloadFullContainer(selector) {
+  const node = document.querySelector(selector);
+
+  if (!node) {
+    console.error("No se encontró el contenedor:", selector);
+    return;
+  }
+
+  domtoimage.toPng(node, {
+    width: node.scrollWidth,
+    height: node.scrollHeight
+  })
+  .then((dataUrl) => {
+    const link = document.createElement("a");
+    link.download = "informe-notas.png";
+    link.href = dataUrl;
+    link.click();
+  })
+  .catch((error) => {
+    console.error("Error al exportar:", error);
+  });
+}
+
+    document.querySelector('.descargar').addEventListener('click', () =>{
+      downloadFullContainer('.main-content')
+    })
+})
 
 function getGradeColor(grade) {
   if (grade >= 1.0 && grade <= 2.9) return "red"; // malo
