@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informe Grupal</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="document" id="informe">
+    <header>
+      <h1>Analísis Grupal</h1>
+    </header>
+
+    <!-- Botón de descarga -->
+    <div style="text-align: right; margin-bottom: 20px;">
+      <button class="download-btn" id="downloadPDF">⬇ Descargar Informe</button>
+    </div>
+
+    <!-- Tarjetas resumen -->
+    <section class="resumen">
+      <div class="card">
+        <h3>Promedio General</h3>
+        <p class="general_promedio">0.0</p>
+      </div>
+      <div class="card">
+        <h3>Mejor Materia</h3>
+        <p class="mejor_materia">Materia (0.0)</p>
+      </div>
+      <div class="card">
+        <h3>Peor Materia</h3>
+        <p class="peor_materia">Materia (0.0)</p>
+      </div>
+      <div class="card">
+        <h3>% Aprobados</h3>
+        <p class="porcentaje_de_aprobados">0.0%</p>
+      </div>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="charts">
+      <div class="chart-card">
+        <h3>Notas por Materia</h3>
+        <canvas id="notasMaterias"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Promedio General</h3>
+        <h1 class="promedio_general">0.0</h1>
+      </div>
+      <div class="chart-card">
+        <h3>Distribución de Notas</h3>
+        <canvas id="distribucionNotas"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Aprobados vs Reprobados</h3>
+        <canvas id="aprobadosReprobados"></canvas>
+      </div>
+    </section>
+
+    <footer>
+      Informe generado por el sistema educativo © 2025 - Institución Académica
+    </footer>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>

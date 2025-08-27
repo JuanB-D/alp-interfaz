@@ -4,6 +4,10 @@ const ctx3 = document.getElementById("myChart3");
 const userData = JSON.parse(localStorage.getItem("teacher-data"));
 const subjects = ['Cs', 'Esp', 'Mat', 'Soc', 'Nat', 'Ing', 'Rel', 'Eyv', 'Art', 'EF', 'Emp', 'Inf'];
 document.addEventListener("DOMContentLoaded", async () => {
+  const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/set/verify?token=${userData.token}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
+  if(!response.ok){
+    window.location.href = '../index.html'
+  }
 // función auxiliar para mostrar "Cargando..." en un canvas
 function drawLoading(canvas, text = "Cargando...") {
   const c = canvas.getContext("2d");

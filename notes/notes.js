@@ -6,7 +6,11 @@ const Superior = [];
 const Alto = [];
 const Basico = [];
 const Bajo = [];
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', async() =>{
+    const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/set/verify?token=${userData.token}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
+  if(!response.ok){
+    window.location.href = '../index.html'
+  }
   function downloadFullContainer(selector) {
   const node = document.querySelector(selector);
 

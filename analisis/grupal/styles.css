@@ -1,0 +1,106 @@
+ body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f1f5f9;
+      color: #333;
+    }
+    .document {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 15px;
+    }
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+    }
+    .date {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    /* Botón de descarga */
+    .download-btn {
+      display: inline-block;
+      background: #10b981;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .download-btn:hover {
+      background: #059669;
+    }
+    /* Tarjetas resumen */
+    .resumen {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #4f46e5;
+    }
+    .card p {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0;
+    }
+    /* Gráficos */
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    .chart-card {
+      background: #fafafa;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+    .chart-card h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #111827;
+    }
+    canvas {
+      max-width: 100%;
+      height: 260px !important;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 15px;
+    }
+    .chart-card{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
