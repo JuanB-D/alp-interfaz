@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
     <title>Análisis</title>
 </head>
 
 <body>
-    <main class="analisis-dashboard">
+    <main class="analisis-dashboard" id="informe">
         <div class="header">
             <h1>Análisis General</h1>
-            <button class="descargar">Descargar Informe</button>
+            <button id="downloadPDF">Descargar Informe</button>
         </div>
         <h2 style="display: flex; align-self: flex-start;">Promedio General</h2>
         <div class="charts">
@@ -27,6 +28,7 @@
         <div class="subject-charts">
             <canvas id="myChart3" width="200px" height="100px" class="graphic-bar2"></canvas>
         </div>
+        <p class="copyrigth">Informe generado por el sistema educativo © 2025 - Institución Académica</p>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 

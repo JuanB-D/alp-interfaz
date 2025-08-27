@@ -150,30 +150,18 @@ async function getSubjectAverage(subject) {
     },
     options: { responsive: true, scales: { y: { beginAtZero: true } } },
   });
-function downloadFullContainer(selector) {
-  const node = document.querySelector(selector);
+  // === Botón para descargar PDF ===
+  document.getElementById("downloadPDF").addEventListener("click", () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("p", "pt", "a4");
+    const informe = document.getElementById("informe");
 
-  if (!node) {
-    console.error("No se encontró el contenedor:", selector);
-    return;
-  }
-
-  domtoimage.toPng(node, {
-    width: node.scrollWidth,
-    height: node.scrollHeight
-  })
-  .then((dataUrl) => {
-    const link = document.createElement("a");
-    link.download = "informe-analisis.png";
-    link.href = dataUrl;
-    link.click();
-  })
-  .catch((error) => {
-    console.error("Error al exportar:", error);
+    html2canvas(informe).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      doc.save("informe_grupal.pdf");
+    });
   });
-}
-
-    document.querySelector('.descargar').addEventListener('click', () =>{
-      downloadFullContainer('.analisis-dashboard')
-    })
 });

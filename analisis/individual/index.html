@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análisis Individual</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="informe" class="informe">
+    <h2>Análisis Individual del Estudiante</h2>
+    <button id="downloadPDF">⬇ Descargar Informe</button>
+
+    <!-- 🔹 Tarjetas resumen -->
+    <section class="resumen">
+      <div class="card">
+        <h3>Promedio General</h3>
+        <p class="general_promedio">0.0</p>
+      </div>
+      <div class="card">
+        <h3>Mejor Materia</h3>
+        <p class="mejor_materia">Materia (0.0)</p>
+      </div>
+      <div class="card">
+        <h3>Peor Materia</h3>
+        <p class="peor_materia">Materia (0.0)</p>
+      </div>
+      <div class="card">
+        <h3>% Notas Aprobadas</h3>
+        <p class="porcentaje_de_aprobados">0.0%</p>
+      </div>
+    </section>
+
+    <!-- 🔹 Gráficas -->
+    <div class="charts">
+      <div class="chart-container">
+        <h3>Promedio General</h3>
+        <canvas id="promedioGeneral"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Materias Perdiendo</h3>
+        <canvas id="materiasPerdiendo"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Básicas vs No Básicas</h3>
+        <canvas id="basicasVsNoBasicas"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Comparación entre Materias</h3>
+        <canvas id="comparacionMaterias"></canvas>
+      </div>
+    </div>
+    <p>      Informe generado por el sistema educativo © 2025 - Institución Académica</p>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

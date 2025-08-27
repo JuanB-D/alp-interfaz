@@ -1,16 +1,6 @@
 const materias = [
-  "Cs",
-  "Esp",
-  "Mat",
-  "Soc",
-  "Nat",
-  "Ing",
-  "Rel",
-  "EyV",
-  "Art",
-  "EF",
-  "Emp",
-  "Inf",
+  "Cs","Esp","Mat","Soc","Nat","Ing",
+  "Rel","EyV","Art","EF","Emp","Inf"
 ];
 let aprobados = 0;
 let reprobados = 0;
@@ -22,27 +12,28 @@ const dataFill = {
   porcentajeAprobados: document.querySelector(".porcentaje_de_aprobados"),
   promedioGeneral2: document.querySelector(".promedio_general"),
 };
+const notas = [];
+const indices = [];
+const colores = [
+  "#1d4ed8","#3b82f6","#10b981","#f59e0b",
+  "#ef4444","#8b5cf6","#06b6d4","#f97316",
+  "#22c55e","#eab308","#ec4899","#6366f1",
+];
+
+// === Mostrar "Cargando..." al inicio ===
 dataFill.promedioGeneral.textContent = "Cargando...";
 dataFill.promedioGeneral2.textContent = "Cargando...";
 dataFill.mejorMateria.textContent = "Cargando...";
 dataFill.peorMateria.textContent = "Cargando...";
 dataFill.porcentajeAprobados.textContent = "Cargando...";
-const notas = [];
-const indices = [];
-const colores = [
-  "#1d4ed8",
-  "#3b82f6",
-  "#10b981",
-  "#f59e0b",
-  "#ef4444",
-  "#8b5cf6",
-  "#06b6d4",
-  "#f97316",
-  "#22c55e",
-  "#eab308",
-  "#ec4899",
-  "#6366f1",
-];
+
+// Mensajes de carga sobre los gráficos
+document.getElementById("notasMaterias")
+  .insertAdjacentHTML("beforebegin", "<p id='loadingMaterias'>Cargando gráfico...</p>");
+document.getElementById("distribucionNotas")
+  .insertAdjacentHTML("beforebegin", "<p id='loadingDistribucion'>Cargando gráfico...</p>");
+document.getElementById("aprobadosReprobados")
+  .insertAdjacentHTML("beforebegin", "<p id='loadingPie'>Cargando gráfico...</p>");
 
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch(
@@ -53,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!response.ok) {
     window.location.href = "../../index.html";
   }
+
   async function getAverageGrades() {
     try {
       for (let i = 0; i < materias.length; i++) {
@@ -72,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error(error);
     }
   }
+
   async function getGeneralAverage() {
     try {
       const response = await fetch(
@@ -88,17 +81,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log(error);
     }
   }
-  const promedioGeneral = await getGeneralAverage();
 
-  dataFill.promedioGeneral.textContent =
-    promedioGeneral.data[0].promedio.toFixed(1);
-  dataFill.promedioGeneral2.textContent =
-    promedioGeneral.data[0].promedio.toFixed(1);
+  const promedioGeneral = await getGeneralAverage();
+  dataFill.promedioGeneral.textContent = promedioGeneral.data[0].promedio.toFixed(1);
+  dataFill.promedioGeneral2.textContent = promedioGeneral.data[0].promedio.toFixed(1);
+
   await getAverageGrades();
 
-  async function getStudentsLength (){
+  async function getStudentsLength() {
     try {
-      const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/data/groupstudents?grupo_id=${parseInt(localStorage.getItem('group'))}`, {method: 'GET', headers: {'Authorization': `Bearer ${userData.token}`}})
+      const response = await fetch(
+        `https://eduanalitycsapi-production.up.railway.app/data/groupstudents?grupo_id=${parseInt(localStorage.getItem('group'))}`,
+        { method: 'GET', headers: { 'Authorization': `Bearer ${userData.token}` } }
+      )
       const responseData = await response.json();
       responseData.data.forEach(student => {
         indices.push(student.id);
@@ -109,48 +104,48 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   await getStudentsLength();
 
-for(let i = 0; i < indices.length; i++){
-  let sum = 0;
-  try {
-    const response = await fetch(`https://eduanalitycsapi-production.up.railway.app/data/studentgrades?student_id=${indices[i]}`, {method: 'GET', headers: {'authorization': `Bearer ${userData.token}`}});
-    const responseData = await response.json();
-    responseData.data.forEach(nota =>{
-      if(nota.grade < 3) sum++;
-    })
+  for (let i = 0; i < indices.length; i++) {
+    let sum = 0;
+    try {
+      const response = await fetch(
+        `https://eduanalitycsapi-production.up.railway.app/data/studentgrades?student_id=${indices[i]}`,
+        { method: 'GET', headers: { 'authorization': `Bearer ${userData.token}` } }
+      );
+      const responseData = await response.json();
+      responseData.data.forEach(nota => {
+        if (nota.grade < 3) sum++;
+      })
 
-    if(sum >1)reprobados++;
-    if(sum <2)aprobados++;
+      if (sum > 1) reprobados++;
+      if (sum < 2) aprobados++;
 
-  } catch (error) {
-    console.error(error)
+    } catch (error) {
+      console.error(error)
+    }
   }
-}
 
   if (notas.length > 0) {
-    // Mejor nota ignorando null
     const mejorNota = Math.max(...notas.map((n) => n ?? -Infinity));
     const indexMejor = notas.indexOf(mejorNota);
-    dataFill.mejorMateria.textContent = `${
-      materias[indexMejor]
-    } (${mejorNota.toFixed(1)})`;
+    dataFill.mejorMateria.textContent = `${materias[indexMejor]} (${mejorNota.toFixed(1)})`;
 
-    // Peor nota ignorando null y 0
-    const peorNota = Math.min(
-      ...notas.map((n) => (n === null || n === 0 ? Infinity : n))
-    );
+    const peorNota = Math.min(...notas.map((n) => (n === null || n === 0 ? Infinity : n)));
     const indexPeor = notas.indexOf(peorNota);
-    dataFill.peorMateria.textContent = `${
-      materias[indexPeor]
-    } (${peorNota.toFixed(1)})`;
+    dataFill.peorMateria.textContent = `${materias[indexPeor]} (${peorNota.toFixed(1)})`;
   } else {
     dataFill.mejorMateria.textContent = "Sin datos";
     dataFill.peorMateria.textContent = "Sin datos";
   }
-  dataFill.porcentajeAprobados.textContent = `${((aprobados/(aprobados+reprobados))*100).toFixed(1)}%`;
-  document.getElementById("notasMaterias").textContent = '...Cargando';
-  document.getElementById("distribucionNotas").textContent = '...Cargando';
-  document.getElementById("aprobadosReprobados").textContent = '...Cargando'
-  // Notas por materia
+
+  dataFill.porcentajeAprobados.textContent =
+    `${((aprobados / (aprobados + reprobados)) * 100).toFixed(1)}%`;
+
+  // === Quitar mensajes de carga antes de renderizar ===
+  document.getElementById("loadingMaterias").remove();
+  document.getElementById("loadingDistribucion").remove();
+  document.getElementById("loadingPie").remove();
+
+  // === Renderizar gráficas ===
   new Chart(document.getElementById("notasMaterias"), {
     type: "bar",
     data: {
@@ -163,7 +158,6 @@ for(let i = 0; i < indices.length; i++){
     },
   });
 
-  // Distribución de notas (línea)
   new Chart(document.getElementById("distribucionNotas"), {
     type: "line",
     data: {
@@ -182,17 +176,18 @@ for(let i = 0; i < indices.length; i++){
     options: { plugins: { legend: { display: false } } },
   });
 
-  // Aprobados vs Reprobados
   new Chart(document.getElementById("aprobadosReprobados"), {
     type: "pie",
     data: {
       labels: ["Aprobados", "Reprobados"],
-      datasets: [{ data: [aprobados, reprobados], backgroundColor: ["#3b82f6", "#ef4444"] }],
+      datasets: [
+        { data: [aprobados, reprobados], backgroundColor: ["#3b82f6", "#ef4444"] }
+      ],
     },
     options: { plugins: { legend: { position: "bottom" } } },
   });
 
-  // === Función para descargar PDF ===
+  // === Botón para descargar PDF ===
   document.getElementById("downloadPDF").addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF("p", "pt", "a4");

@@ -1,0 +1,83 @@
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1vh;
+      margin-bottom: 20px;
+    }
+    h2::after {
+      width: 350px;
+      height: 4px;
+      background-color: blueviolet;
+      content: "";
+      align-self: center;
+    }
+
+    /* 🔹 Estilos tarjetas resumen */
+    .resumen {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .card p {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #222;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .chart-container {
+      background: #fff;
+      padding: 15px;
+      width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    canvas {
+      width: 400px !important;
+      height: 300px !important;
+    }
+    .informe {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2vh;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    #downloadPDF{
+        padding: 1vh;
+        background-color: rgb(161, 91, 226);
+        color: white;
+        cursor: pointer;
+    }
