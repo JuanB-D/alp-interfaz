@@ -5,11 +5,15 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f2f5;
     color: #333;
+    background:
+        linear-gradient(#00000066, #00000066),
+        /* velo oscuro */
+        url('../images/colegio2.webp') center/cover no-repeat fixed;
 }
 
 .dashboard-container {
+    margin-top: 5vh;
     width: 90%;
     max-width: 600px;
     padding: 40px;
@@ -68,13 +72,33 @@ body {
 }
 
 /* Colores de las tarjetas */
-.class-card[data-color="blue"] { background: #5a85ff; }
-.class-card[data-color="purple"] { background: #9c66ff; }
-.class-card[data-color="green"] { background: #4caf50; }
-.class-card[data-color="yellow"] { background: #ffc107; }
-.class-card[data-color="orange"] { background: #ff7043; }
-.class-card[data-color="cyan"] { background: #00bcd4; }
-.class-card[data-color="pink"] { background: #e91e63; }
+.class-card[data-color="blue"] {
+    background: #5a85ff;
+}
+
+.class-card[data-color="purple"] {
+    background: #9c66ff;
+}
+
+.class-card[data-color="green"] {
+    background: #4caf50;
+}
+
+.class-card[data-color="yellow"] {
+    background: #ffc107;
+}
+
+.class-card[data-color="orange"] {
+    background: #ff7043;
+}
+
+.class-card[data-color="cyan"] {
+    background: #00bcd4;
+}
+
+.class-card[data-color="pink"] {
+    background: #e91e63;
+}
 
 .class-options {
     display: flex;
@@ -99,7 +123,7 @@ body {
     color: #007bff;
 }
 
-.AG{
+.AG {
     padding: 1vh;
     background-color: #9c66ff;
     color: white;

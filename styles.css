@@ -9,7 +9,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
+           background:
+      linear-gradient(#00000066,#00000066), /* velo oscuro */
+      url('../images/colegio.jpg') center/cover no-repeat fixed;
+  }
 
 .login-wrapper {
     flex-grow: 1;

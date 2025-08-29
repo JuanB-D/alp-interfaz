@@ -158,11 +158,11 @@ async function renderStudents() {
         // Estilo más discreto
         button.style.cursor = "pointer";
         button.style.padding = "4px 8px";
-        button.style.border = "1px solid #ccc";
-        button.style.borderRadius = "4px";
-        button.style.background = "#f4f4f4";
-        button.style.color = "#333";
+        button.style.border = 'white'
+        button.style.background = 'none';
+        button.style.color = "blue";
         button.style.fontSize = "13px";
+        button.style.textDecoration = 'underline'
 
         button.addEventListener("click", () => {
           // Aquí decides qué hacer con el botón

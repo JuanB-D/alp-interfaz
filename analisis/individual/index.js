@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Filtrar solo las materias con nota > 0
   const notasValidas = notas.filter(n => n > 0);
-  const materiasValidas = materias.filter((_, i) => notas[i] > 0);
 
   let mejorNota = 0, peorNota = 0, mejorMateria = "N/A", peorMateria = "N/A";
 
